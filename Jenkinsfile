@@ -23,10 +23,23 @@ pipeline {
     }
 
     stage('error') {
-      steps {
-        sh './jenkins/scripts/deliver.sh'
-        input 'inished using the web site? (Click "Proceed" to continue)'
-        sh './jenkins/scripts/kill.sh'
+      parallel {
+        stage('error') {
+          steps {
+            sh './jenkins/scripts/deliver.sh'
+            input 'inished using the web site? (Click "Proceed" to continue)'
+            sh './jenkins/scripts/kill.sh'
+          }
+        }
+
+        stage('Add \'Deliver\' stage') {
+          steps {
+            sh './jenkins/scripts/deliver.sh'
+            input 'Finished using the web site? (Click "Proceed" to continue)'
+            sh './jenkins/scripts/kill.sh'
+          }
+        }
+
       }
     }
 
