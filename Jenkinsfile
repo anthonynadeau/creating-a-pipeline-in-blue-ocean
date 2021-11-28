@@ -22,7 +22,7 @@ pipeline {
       }
     }
 
-    stage('') {
+    stage('error') {
       steps {
         sh './jenkins/scripts/deliver.sh'
         input 'inished using the web site? (Click "Proceed" to continue)'
